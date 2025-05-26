@@ -1,14 +1,13 @@
 import fastify from 'fastify';
-import cors from '@fastify/cors'; // ADICIONE ESTA LINHA
+import cors from '@fastify/cors'; 
 import { fetchPostJson } from './src/index.js';
 
 const app = fastify();
 
 const PORT = process.env.PORT || 3000;
 
-// HABILITE O CORS PARA TODAS AS ORIGENS
 app.register(cors, {
-  origin: true // aceita qualquer origem. Para produção, especifique a origem do seu frontend!
+  origin: 'https://jhonatasjgr.github.io'
 });
 
 app.get('/', async (request, reply) => {
@@ -28,7 +27,7 @@ app.get('/download/', async (request, reply) => {
 const start = async () => {
     try {
         await app.listen({ host: '0.0.0.0', port: PORT });
-        console.log('Servidor rodando em http://localhost:3000');
+        console.log(`Servidor rodando em http://localhost:${PORT}`);
     } catch (err) {
         console.error(err);
         process.exit(1);
