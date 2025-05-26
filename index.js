@@ -1,10 +1,15 @@
 import fastify from 'fastify';
-
-import { fetchPostJson } from './src/index.js'
+import cors from '@fastify/cors'; // ADICIONE ESTA LINHA
+import { fetchPostJson } from './src/index.js';
 
 const app = fastify();
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
+
+// HABILITE O CORS PARA TODAS AS ORIGENS
+app.register(cors, {
+  origin: true // aceita qualquer origem. Para produção, especifique a origem do seu frontend!
+});
 
 app.get('/', async (request, reply) => {
     reply.send('/download/?url=Link-do-video-instagram');
@@ -15,14 +20,14 @@ app.get('/download/', async (request, reply) => {
 
     console.log("--> GET /download", url, new Date().toLocaleString())
 
-    if (!url) reply.send({ error: 'forneça uma URL do instagram' })
-    let resultado = await fetchPostJson(url)
+    if (!url) reply.send({ error: 'forneça uma URL do instagram' });
+    let resultado = await fetchPostJson(url);
     reply.send({ ...resultado });
 });
 
 const start = async () => {
     try {
-        app.listen({ host: '0.0.0.0', port: PORT });
+        await app.listen({ host: '0.0.0.0', port: PORT });
         console.log('Servidor rodando em http://localhost:3000');
     } catch (err) {
         console.error(err);
