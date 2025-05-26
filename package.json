@@ -15,5 +15,8 @@
         "axios": "^1.6.2",
         "cheerio": "^1.0.0-rc.12",
         "fastify": "^5.3.3"
+    },
+    "engines": {
+    "node": ">=20"
     }
 }
